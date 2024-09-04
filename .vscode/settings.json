@@ -3,6 +3,10 @@
     "files.associations": {
         ".fantomasignore": "ignore",
         "iostream": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "xlocale": "cpp",
+        "xlocinfo": "cpp",
+        "system_error": "cpp",
+        "vector": "cpp"
     }
 }

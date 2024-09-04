@@ -16,53 +16,134 @@ Prompt the user to enter their name
 
 #include <iostream>
 #include <vector>
+#include <cstring> 
+#include <string> 
 
 using namespace std;
 
-void binarySearch(vector<char> name, string inputName);
-void bubbleSort(vector<char> name, string inputName);
+int binarySearch(string iName, int size, vector<char> vowels);
+void linearSearch(string iName, string inputName, bool &vowelFound);
+void noVowel(bool &vowelFound);
+
+vector<char> vowels{'a', 'A', 'e', 'E', 'o', 'O', 'i', 'I', 'u', 'U'};
 
 int main () {
-    vector<char> name;
-    string inputName; 
+    string iName;
+    //string inputName; 
     int searchType;
+    bool vowelFound = false; 
+    int position;
+    //int size, searchValue;
+    //vector<string>name;
+    int size = 10;
+    //const int length = inputName.length();
+
+    //char* char_array = new char(length + 1);
+
+    //strcpy(char_array, inputName.c_str());
+    cout << "Input your name:\n";
+    cin >> iName;
 
     cout << "What type of search would you like to use to detect vowels?\n";
     cout << "1.) Binary Search\n";
-    cout << "2.) Bubble Sort\n";
+    cout << "2.) Linear Search\n";
 
     cin >> searchType;
 
-    (searchType == 1) ? void(binarySearch(name, inputName)) :
-        (searchType == 2) ? void(bubbleSort(name, inputName)) :
+    (searchType == 1) ? void(position = binarySearch(iName, size, vowels)) :
+        (searchType == 2) ? void(linearSearch(iName, inputName, vowelFound)) :
             void(cout << "Invalid input, try again");
 
-
+    
+    noVowel(vowelFound);
 }
 
-void binarySearch(vector<char> name, string inputName) {
-    cout << "You chose Binary Search, input your name:\n";
+int binarySearch(string iName, int size, vector<char> vowels) {
+    //vector<string> name;
+    //bool vowelFound = false; 
+    int first = 0, last = size - 1, middle, position = -1;       		  // Position of search value
+    bool found = false;       												// Flag
+    int count = 0;
+
+    const int length = iName.length(); 
+  
+    // declaring character array (+1 for null terminator) 
+    char* name_array = new char[length + 1]; 
+  
+    // copying the contents of the 
+    // string to char array 
+    strcpy(name_array, iName.c_str()); 
+
+    while (!found && first <= last) {
+	    count++;
+	    cout << "\n\tcount = " << count;
+
+	    middle = (first + last) / 2;     		 // Calculate mid point
+	if (vowels[middle] == char('a').name_array())     {      		  // If value is found at mid
+		found = true;
+		position = middle;
+	}
+	else if (vowels[middle] > char('a').name_array())        		 // If value is in lower half
+		last = middle - 1;
+	else
+		first = middle + 1;            		// If value is in upper half
+    }
+        cout << "\n\tcount = " << count;
+    return position;
+
+    /*cout << "You chose Binary Search, input your name:\n";
     cin >> inputName;
+
+    name.push_back(inputName);
+
+
+    while(!found && first <= last) {
+        count++;
+        cout << "\n\tcount = " << count;
+
+        middle = (first + last / 2);
+        if (name[middle] == inputName) {
+            found = true;
+            position = middle;
+        } else if {
+            last = middle - 1;
+        } else {
+            first = middle + 1;
+        }
+        cout << "\n\tcount = " << count;
+        return position;
+    }
+
+    iName = inputName;
+    //name = inputName;
+    //name.push_back(inputName);
+
+    for (int i = 0; i < iName.size(); i++) {
+        char charName = iName[i];
+        (charName == 'a' || charName == 'A') ? void(cout << "\na\n") :
+                (charName == 'e' || charName == 'E') ? void(cout << "\ne\n") :
+                    (charName == 'o' || charName == 'O') ? void(cout << "\no\n") :
+                        (charName == 'i' || charName == 'I') ? void(cout << "\ni\n") :
+                            (charName == 'u' || charName == 'U') ? void(cout << "\nu\n") :
+                                void(cout << " "); 
+        
+        (charName == 'a' || charName == 'A') ? void(vowelFound = true) :
+                (charName == 'e' || charName == 'E') ? void(vowelFound = true) :
+                    (charName == 'o' || charName == 'O') ? void(vowelFound = true) :
+                        (charName == 'i' || charName == 'I') ? void(vowelFound = true) :
+                            (charName == 'u' || charName == 'U') ? void(vowelFound = true) :
+                                void(cout << " "); 
+
+    }*/
 }
 
-void bubbleSort(vector<char> name, string inputName) {
-    char tmp; 
+void linearSearch(string iName, string inputName, bool &vowelFound) {
+    //char tmp; 
 
-    cout << "You chose Bubble Sort, input your name:\n";
+    cout << "You chose Linear Search, input your name:\n";
     cin >> inputName; 
 
-    name.push_back(inputName); 
 
-    for (int i = 0; i < name.size(); i++) {
-        for (int j = 0; j < name.size() - 1; j++) {
-            (name[j] = 'a' || name[j-1] = 'a') ? (cout << "\na\n") :
-                (name[j] = 'e' || name[j-1] = 'e') ? (cout << "\ne\n") :
-                    (name[j] = 'o' || name[j-1] = 'o') ? (cout << "\no\n") :
-                        (name[j] = 'i' || name[j-1] = 'i') ? (cout << "\ni\n") :
-                            (name[j] = 'u' || name[j-1] = 'u') ? (cout << "\nu\n") :
-                                cout << "There are no vowels in that name"; 
-        }
-    }
 /*
     for (int j = 1; j <= i-1; j++) {
     for (int k = 0; k < i-1; k++) {
@@ -73,4 +154,10 @@ void bubbleSort(vector<char> name, string inputName) {
       }
     }
   }*/
+}
+
+void noVowel(bool &vowelFound) {
+    if (vowelFound == false) {
+        cout << "\nThere are no vowels in that name.\n";
+    }
 }
