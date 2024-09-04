@@ -1,3 +1,21 @@
+/* 
+
+@ AJ Enrique Arguello (8/25/24)
+
+Q3 What’s in a name – Searches. Create 2 Searches (each one a Function)
+
+Use a Linear Search and then a Binary search
+
+Prompt the user to enter their name
+
+  Send the name to each Function
+
+      1. Search for vowels - Display the vowels that are in their name
+
+      2. Calculate the Big O for each type of search
+
+*/
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -43,13 +61,14 @@ int main() {
     return 0;
 }
 
-// Linear search function to find vowels in the input name
 void linearSearch(string &iName,  vector<char> &vowels, unordered_set<char> &foundVowels) {
-    for (char ch : iName) { // iterates over each character in iName
-        for (char vowel : vowels) { // iterates over each character in vowels vector
-            if (ch == vowel) {
-                foundVowels.insert(vowel); // inserts vowel into the foundVowels set 
-                break; // No need to check further vowels for this character
+    for (size_t i = 0; i < iName.size(); ++i) { // iterates over input name
+        char charName = iName[i]; //grabs current characters from input name
+        
+        for (size_t j = 0; j < vowels.size(); ++j) { // iterates each character in vowels
+            if (charName == vowels[j]) {
+                foundVowels.insert(vowels[j]); // vowel is inserted into foundVowels set
+                break;
             }
         }
     }
@@ -75,22 +94,28 @@ void printVowels( unordered_set<char> &foundVowels) {
     }
 }
 
-void sortVowels( string& iName, vector<char>& sortedVowels) { // function to sort vowels/extract duplicates
+void sortVowels(string& iName, vector<char>& sortedVowels) {
     unordered_set<char> vowelSet{'a', 'A', 'e', 'E', 'o', 'O', 'i', 'I', 'u', 'U'};
     vector<char> foundVowels;
 
-    for (char ch : iName) { // iterates over input name
-        if (vowelSet.find(ch) != vowelSet.end()) {
+    for (size_t i = 0; i < iName.size(); ++i) { // extracts vowels from inputname
+        char ch = iName[i];
+        if (vowelSet.find(ch) != vowelSet.end()) { // checks if ch matches a element within vowelSet, if so, push into foundVowels vector
             foundVowels.push_back(ch);
         }
     }
 
-    // Remove duplicates by converting vector to set, then back to vector
-    sort(foundVowels.begin(), foundVowels.end()); // Sort the vowels
+    sort(foundVowels.begin(), foundVowels.end()); // sorts set of found vowels in ascending order 
 
-    // Remove duplicates
-    auto last = unique(foundVowels.begin(), foundVowels.end());
-    foundVowels.erase(last, foundVowels.end());
+    vector<char> noDuplicates; // new vector to store vowels without duplicates
+    if (!foundVowels.empty()) { // if foundvowels is not empty 
+        noDuplicates.push_back(foundVowels[0]); // add first element
+        for (size_t i = 1; i < foundVowels.size(); ++i) { // iterates over foundvowels vector starting with the second element 
+            if (foundVowels[i] != foundVowels[i - 1]) { // if current vowel is different from the previous, add to noDuplicates as it is not a duplicate
+                noDuplicates.push_back(foundVowels[i]);
+            }
+        }
+    }
 
-    sortedVowels = foundVowels; // Assign sorted unique vowels to the output parameter
+    sortedVowels = noDuplicates; // moves elements from noDuplicates to sortedVowels vector
 }
