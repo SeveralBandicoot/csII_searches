@@ -7,6 +7,7 @@
         "xlocale": "cpp",
         "xlocinfo": "cpp",
         "system_error": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "unordered_set": "cpp"
     }
 }
